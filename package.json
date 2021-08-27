@@ -1,6 +1,6 @@
 {
-  "name": "@vlasky/node-apn-http2",
-  "version": "1.2.2",
+  "name": "@alqatech/node-apn-http2",
+  "version": "1.2.3",
   "description": "Communicate with Apple Push Notification Service via native Node.js v10+ HTTP2 module (node-apn drop-in). A fork of petercv's fork of andreialecu's package.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,9 +8,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublish": "tsc -p ."
   },
-  "repository": "https://github.com/vlasky/node-apn-http2",
-  "author": "Vlad Lasky <github@vladlasky.com> (https://github.com/vlasky)",
+  "repository": "git@github.com:alqatech/node-apn-http2.git",
+  "author": "AlqaTech <info@alqatech.com> (https://github.com/alqatech)",
   "contributors": [
+    "AlqaTech Team <info@alqatech.com> (https://github.com/alqatech)",
     "Andrei Alecu (https://github.com/andreialecu)",
     "Peter Verhage <peter@egeniq.com> (https://github.com/petercv)"
   ],

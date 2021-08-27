@@ -1,4 +1,4 @@
-@vlasky/node-apn-http2
+@alqatech/node-apn-http2
 ==============
 
 [![Current Version](https://img.shields.io/npm/v/@vlasky/node-apn-http2.svg?style=flat-square)](https://www.npmjs.org/package/@vlasky/node-apn-http2)
@@ -12,13 +12,13 @@ This package is supposed to be drop-in compatible with [node-apn](https://github
 [yarn](https://yarnpkg.com) is the preferred installation method:
 
 ```bash
-$ yarn add @vlasky/node-apn-http2
+$ yarn add @alqatech/node-apn-http2
 ```
 
 ### Load in the module
 
 ```javascript
-var apn = require('@vlasky/node-apn-http2');
+var apn = require('@alqatech/node-apn-http2');
 ```
 
 ```javascript
@@ -29,6 +29,8 @@ var options = {
     teamId: "developer-team-id"
   },
   production: false,
+  pingInterval: 500000, // Change Ping time according to your environment 
+                        // Apple may stop responding if Ping interval is too high 
   hideExperimentalHttp2Warning: true // the http2 module in node is experimental and will log 
                                      // ExperimentalWarning: The http2 module is an experimental API. 
                                      // to the console unless this is set to true
@@ -80,6 +82,10 @@ If you are constantly creating `Provider` instances in your app, make sure to ca
 You are encouraged to read the extremely informative [Troubleshooting Push Notifications](http://developer.apple.com/library/ios/#technotes/tn2265/_index.html) Tech Note in the first instance, in case your query is answered there.
 
 ## History
+
+### v1.2.3
+
+- Ping Interval time is now configurable to avoid connection lost 
 
 ### v1.2.2
 

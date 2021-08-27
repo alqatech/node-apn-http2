@@ -12,7 +12,8 @@ export interface APNProviderOptions {
   token: TokenOptions,
   production?: boolean,
   hideExperimentalHttp2Warning?: boolean,
-  requestTimeout?: number
+  requestTimeout?: number,
+  pingInterval?: number,
 }
 
 export interface APNSendResult {
@@ -43,16 +44,19 @@ export class APNPushProvider {
   private _lastToken: string;
   private _lastTokenTime: number;
   private _pingInterval;
-
+  
   constructor(private options: APNProviderOptions) {
     this.authToken = new AuthToken(options.token);
-    
     if (typeof options.production == 'undefined' || options.production === null) {
       options.production = process.env.NODE_ENV === "production";
     }
     
     if (typeof options.requestTimeout == 'undefined' || options.requestTimeout === null) {
       options.requestTimeout = 10000;
+    }
+
+    if (typeof options.pingInterval == 'undefined' || options.pingInterval === null) {
+      options.pingInterval = 200000;
     }
 
     // workaround to disable experimental http2 warning via options
@@ -89,7 +93,7 @@ export class APNPushProvider {
   
         this._pingInterval = setInterval(() => {
           this.ping();
-        }, 600000); // every 10m
+        }, this.options.pingInterval); // every 10m
       }
       
       if (this.session.connecting) {
