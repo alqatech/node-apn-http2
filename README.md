@@ -15,6 +15,10 @@ This package is supposed to be drop-in compatible with [node-apn](https://github
 $ yarn add @alqatech/node-apn-http2
 ```
 
+```bash
+$ npm install @alqatech/node-apn-http2
+```
+
 ### Load in the module
 
 ```javascript

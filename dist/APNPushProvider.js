@@ -11,12 +11,14 @@ class APNPushProvider {
     constructor(options) {
         this.options = options;
         this.authToken = new Token_1.AuthToken(options.token);
-        console.log('apns constructor ');
         if (typeof options.production == 'undefined' || options.production === null) {
             options.production = process.env.NODE_ENV === "production";
         }
         if (typeof options.requestTimeout == 'undefined' || options.requestTimeout === null) {
             options.requestTimeout = 10000;
+        }
+        if (typeof options.pingInterval == 'undefined' || options.pingInterval === null) {
+            options.pingInterval = 200000;
         }
         // workaround to disable experimental http2 warning via options
         if (options.hideExperimentalHttp2Warning) {
@@ -36,24 +38,21 @@ class APNPushProvider {
     }
     ensureConnected() {
         return new Promise((resolve, reject) => {
-            console.log('apns ensureConnected ');
             if (!this.session || this.session.destroyed) {
                 this.session = http2.connect(this.options.production ? AuthorityAddress.production : AuthorityAddress.development);
                 // set default error handler, else the emitter will throw an error that the error event is not handled
                 this.session.on('error', (err) => {
-                    console.log('apns ensureConnected ', err);
                     // if the error happens during a request, the request will receive the error as well
                     // otherwise the connection will be destroyed and will be reopened the next time this
                     // method is called
                 });
                 this.session.on('close', (err) => {
-                    console.log('apns session closed ', err);
                     clearInterval(this._pingInterval);
                     this._pingInterval = null;
                 });
                 this._pingInterval = setInterval(() => {
                     this.ping();
-                }, 600000); // every 10m
+                }, this.options.pingInterval); // every 10m
             }
             if (this.session.connecting) {
                 this.session.on('connect', resolve);

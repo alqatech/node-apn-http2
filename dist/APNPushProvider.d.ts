@@ -5,6 +5,7 @@ export interface APNProviderOptions {
     production?: boolean;
     hideExperimentalHttp2Warning?: boolean;
     requestTimeout?: number;
+    pingInterval?: number;
 }
 export interface APNSendResult {
     sent: Array<string>;
